@@ -21,6 +21,7 @@
 
  创建adapter
 
+```ruby
 public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecyclerviewLayoutBinding, BeanViewModel> {
 
     @Override
@@ -39,7 +40,8 @@ public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecycler
     }
 }
 
- 第一个泛型是你列表xml布局对应生成的Binding，第二个泛型是列表数据的ViewModel。这基本是固定模板，你需要改的只有布局和dataBinding和绑定对应ViewModel。
+```
+ 第一个泛型是你列表xml布局对应生成的Binding，第二个泛型是列表数据的ViewModel。这基本是固定模板，你需要改的只有布局和dataBinding和绑定对应  ViewModel。
  其他的数据监听等都在ViewModel中。
 
  然后使用它
@@ -63,6 +65,7 @@ public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecycler
 
 ## 多布局使用方法
 
+```ruby
 public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding, BeanViewModel> {
     @Override
     protected int getLayoutViewType(BeanViewModel beanViewModel) {
@@ -87,6 +90,8 @@ public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding,
         dataBinding.setVariable(BR.vm, vm);
     }
 }
+
+```
 
  第一个泛型改成了Binding的基类ViewDataBinding，然后在getLayoutViewType中返回你想要的viewType（最好不要为负数，否则可能与头尾布局的viewType冲突）。
  然后在getLayoutId中根据viewType返回对应布局。
