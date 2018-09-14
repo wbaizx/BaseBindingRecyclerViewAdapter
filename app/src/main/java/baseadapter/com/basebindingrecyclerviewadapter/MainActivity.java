@@ -1,5 +1,6 @@
 package baseadapter.com.basebindingrecyclerviewadapter;
 
+import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import baseadapter.com.basebindingrecyclerviewadapter.databinding.ActivityMainBinding;
 import baseadapter.com.library.BaseBindingRecyclerViewAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,38 +19,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        RecyclerView recycler1 = findViewById(R.id.recycler1);
-        RecyclerView recycler2 = findViewById(R.id.recycler2);
-        final RecyclerView recycler3 = findViewById(R.id.recycler3);
-
-//        recycler1.setVisibility(View.VISIBLE);
-//        recycler1.setLayoutManager(new LinearLayoutManager(this));
-//        recycler1.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        activityMainBinding.recycler1.setVisibility(View.VISIBLE);
+//        activityMainBinding.recycler1.setLayoutManager(new LinearLayoutManager(this));
+//        activityMainBinding.recycler1.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 //        NormalAdapter adapter = new NormalAdapter();
-//        recycler1.setAdapter(adapter);
+//        activityMainBinding.recycler1.setAdapter(adapter);
 //        addTestData(adapter.getList());
 
 
-//        recycler2.setVisibility(View.VISIBLE);
-//        recycler2.setLayoutManager(new LinearLayoutManager(this));
-//        recycler2.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        activityMainBinding.recycler2.setVisibility(View.VISIBLE);
+//        activityMainBinding.recycler2.setLayoutManager(new LinearLayoutManager(this));
+//        activityMainBinding.recycler2.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 //        MoreAdapter adapter2 = new MoreAdapter();
 //        addTestData(adapter2.getList());
-//        recycler2.setAdapter(adapter2);
+//        activityMainBinding.recycler2.setAdapter(adapter2);
 
 
-        recycler3.setVisibility(View.VISIBLE);
-        recycler3.setLayoutManager(new LinearLayoutManager(this));
-        recycler3.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        activityMainBinding.recycler3.setVisibility(View.VISIBLE);
+        activityMainBinding.recycler3.setLayoutManager(new LinearLayoutManager(this));
+        activityMainBinding.recycler3.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         MoreAdapter adapter3 = new MoreAdapter();
-        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, recycler3, false));
-        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, recycler3, false));
-        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, recycler3, false));
-        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, recycler3, false));
+        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
+        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
+        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
+        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
         addTestData(adapter3.getList());
-        recycler3.setAdapter(adapter3);
+        activityMainBinding.recycler3.setAdapter(adapter3);
     }
 
 
