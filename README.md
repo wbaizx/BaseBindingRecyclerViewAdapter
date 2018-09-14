@@ -41,14 +41,13 @@ public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecycler
 }
 
 ```
- 第一个泛型是你列表xml布局对应生成的Binding，第二个泛型是列表数据的ViewModel。这基本是固定模板，你需要改的只有布局和dataBinding和绑定对应  ViewModel。
- 其他的数据监听等都在ViewModel中。
+ 第一个泛型是你列表xml布局对应生成的Binding，第二个泛型是列表数据的ViewModel。在convert中绑定对应viewModel即可。
 
  然后使用它
 
-        recycler1.setLayoutManager(new LinearLayoutManager(this));
+        dataBinding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         NormalAdapter adapter = new NormalAdapter();
-        recycler1.setAdapter(adapter);
+        dataBinding.recyclerview.setAdapter(adapter);
 
  BaseBindingRecyclerViewAdapter还有一个带一个ObservableArrayList参数的构造方法，在继承时覆写就能使用，如下：
 
