@@ -7,6 +7,13 @@
 
  导入方法
 
+        allprojects {
+            repositories {
+		  ...
+                maven { url 'https://jitpack.io' }
+            }
+        }
+
         implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.1'
 
 
