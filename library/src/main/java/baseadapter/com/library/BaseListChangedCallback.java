@@ -7,6 +7,7 @@ import android.databinding.ObservableArrayList;
  */
 public class BaseListChangedCallback<T> extends ObservableArrayList.OnListChangedCallback<ObservableArrayList<T>> {
     private BaseBindingRecyclerViewAdapter adapter;
+    private boolean isEnable = false;
 
     public BaseListChangedCallback(BaseBindingRecyclerViewAdapter adapter) {
         this.adapter = adapter;
@@ -19,7 +20,13 @@ public class BaseListChangedCallback<T> extends ObservableArrayList.OnListChange
 
     @Override
     public void onItemRangeChanged(ObservableArrayList<T> sender, int positionStart, int itemCount) {
-        adapter.notifyItemRangeChanged(positionStart + adapter.getHeadersCount(), itemCount);
+        //isEnable 为控制标志，在拖拽监听器onMove中会调用Collections.swap调换item位置，其内部实际是调用list的set方法
+        //set方法会触发当前回调，然而实际onMove中需要调用是notifyItemMoved，所以此处根据标记禁止notifyItemRangeChanged
+        //并在需要的地方手动调用notifyItemMoved或其他方法
+        //注意在ItemTouchHelperCallback中处理好状态恢复
+        if (!isEnable) {
+            adapter.notifyItemRangeChanged(positionStart + adapter.getHeadersCount(), itemCount);
+        }
     }
 
     @Override
@@ -39,5 +46,9 @@ public class BaseListChangedCallback<T> extends ObservableArrayList.OnListChange
     @Override
     public void onItemRangeRemoved(ObservableArrayList<T> sender, int positionStart, int itemCount) {
         adapter.notifyItemRangeRemoved(positionStart + adapter.getHeadersCount(), itemCount);
+    }
+
+    public void enableChangedCallback(boolean isEnable) {
+        this.isEnable = isEnable;
     }
 }

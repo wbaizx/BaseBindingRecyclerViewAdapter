@@ -2,7 +2,7 @@
 
 
  一个简单RecyclerView的Adapter封装，使用Databinding模式，配合ObservableArrayList，使用简单。
- 直接操作list就能自动更新UI，除非特殊情况（什么是特殊我不知道）下，不需要手动调notifyDataSetChanged()等方法。
+ 直接操作list就能自动更新UI，除非特殊情况下，不需要手动调notifyDataSetChanged()等方法。
 
 
  导入方法
@@ -14,12 +14,13 @@
             }
         }
 
-        implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.1'
+        implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.2'
 
  如果使用混淆可能需要配置
 ```java
 -keep public class baseadapter.com.library.** { *; }
 -keep public class * extends baseadapter.com.library.BaseBindingRecyclerViewAdapter
+-keep public class * implements baseadapter.com.library.helper.**
 ```
 
 ## 普通使用方法
@@ -114,6 +115,41 @@ public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding,
 
         adapter.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, recycler, false));
         adapter.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, recycler, false));
+
+ 添加侧滑删除和拖拽功能
+
+```java
+         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
+         itemTouchHelper.attachToRecyclerView(activityMainBinding.recycler);
+
+        //开启拖拽
+        adapter.setDragEnabled(true);
+        adapter.setOnItemDragListener(new OnItemDragListener() {
+            @Override
+            public void onItemDragStart(int listPosition) {
+            }
+            @Override
+            public void onItemDraging(int fromListPosition, int toListPosition) {
+            }
+            @Override
+            public void onItemDragEnd(int listPosition) {
+            }
+        });
+
+        //开启侧滑
+        adapter.setSwipeEnabled(true);
+        adapter.setOnItemSwipeListener(new OnItemSwipeListener() {
+            @Override
+            public void onItemSwipeStart(int listPosition) {
+            }
+            @Override
+            public void onItemSwipeing(RecyclerView.ViewHolder viewHolder, int listPosition) {
+                //adapter.getList().remove(listPosition);
+                //侧滑后如果没有删除选中项需要恢复item状态
+                adapter.recoverItem(viewHolder, listPosition);
+            }
+        });
+```
 
  一般的如点击事件直接在viewModel中处理就好，如果在页面中需要回调（比如页面跳转，因为ViewModel中不好持有Context）,可以创建一个接口，
  然后在adapter中传递给ViewModel，然后在ViewModel的点击处理中回调

@@ -8,11 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import baseadapter.com.basebindingrecyclerviewadapter.databinding.ActivityMainBinding;
 import baseadapter.com.library.BaseBindingRecyclerViewAdapter;
+import baseadapter.com.library.helper.ItemTouchHelperCallback;
+import baseadapter.com.library.helper.OnItemDragListener;
+import baseadapter.com.library.helper.OnItemSwipeListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,13 +45,50 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.recycler3.setVisibility(View.VISIBLE);
         activityMainBinding.recycler3.setLayoutManager(new LinearLayoutManager(this));
         activityMainBinding.recycler3.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        MoreAdapter adapter3 = new MoreAdapter();
+        final MoreAdapter adapter3 = new MoreAdapter();
         adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
         adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
         adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
         adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
         addTestData(adapter3.getList());
         activityMainBinding.recycler3.setAdapter(adapter3);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter3));
+        itemTouchHelper.attachToRecyclerView(activityMainBinding.recycler3);
+        //开启拖拽
+        adapter3.setDragEnabled(true);
+        //开启侧滑
+        adapter3.setSwipeEnabled(true);
+        adapter3.setOnItemDragListener(new OnItemDragListener() {
+            @Override
+            public void onItemDragStart(int listPosition) {
+                Log.e("efafewa", "onItemDragStart" + "--" + listPosition);
+            }
+
+            @Override
+            public void onItemDraging(int fromListPosition, int toListPosition) {
+                Log.e("efafewa", "onItemDraging" + "--" + fromListPosition + "--" + toListPosition);
+            }
+
+            @Override
+            public void onItemDragEnd(int listPosition) {
+                Log.e("efafewa", "onItemDragEnd" + "--" + listPosition);
+            }
+        });
+        adapter3.setOnItemSwipeListener(new OnItemSwipeListener() {
+            @Override
+            public void onItemSwipeStart(int listPosition) {
+                Log.e("gwefwae", "onItemSwipeStart" + "--" + listPosition);
+            }
+
+            @Override
+            public void onItemSwipeing(RecyclerView.ViewHolder viewHolder, int listPosition) {
+                Log.e("gwefwae", "onItemSwipeing" + "--" + listPosition);
+//                adapter3.getList().remove(listPosition);
+                //侧滑后如果没有删除选中项需要恢复item状态
+                adapter3.recoverItem(viewHolder, listPosition);
+            }
+        });
     }
 
 
