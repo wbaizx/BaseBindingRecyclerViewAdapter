@@ -16,12 +16,17 @@
 
         implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.1'
 
+ 如果使用混淆可能需要配置
+```java
+-keep public class baseadapter.com.library.** { *; }
+-keep public class * extends baseadapter.com.library.BaseBindingRecyclerViewAdapter
+```
 
 ## 普通使用方法
 
  创建adapter
 
-```ruby
+```java
 public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecyclerviewLayoutBinding, BeanViewModel> {
 
     @Override
@@ -64,7 +69,7 @@ public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecycler
 
 ## 多布局使用方法
 
-```ruby
+```java
 public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding, BeanViewModel> {
     @Override
     protected int getLayoutViewType(BeanViewModel beanViewModel) {
