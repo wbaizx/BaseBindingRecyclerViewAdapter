@@ -16,13 +16,6 @@
 
         implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.2'
 
- 如果使用混淆可能需要配置
-```java
--keep public class baseadapter.com.library.** { *; }
--keep public class * extends baseadapter.com.library.BaseBindingRecyclerViewAdapter
--keep public class * implements baseadapter.com.library.helper.**
-```
-
 ## 普通使用方法
 
  创建adapter
@@ -111,12 +104,29 @@ public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding,
 
 ## 其他方法
 
- 添加头尾部（瀑布和网格布局会适配到整行，inflate第二个参数最好传入当前RecyclerView）
+### 添加头尾部（瀑布和网格布局会适配到整行，inflate第二个参数最好传入当前RecyclerView）
 
         adapter.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, recycler, false));
         adapter.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, recycler, false));
 
- 添加侧滑删除和拖拽功能
+### 点击事件
+
+ 一般的如点击事件直接在viewModel中处理就好，如果在页面中需要回调（比如页面跳转，因为ViewModel中不好持有Context）,可以创建一个接口，
+ 然后在adapter中传递给ViewModel，然后在ViewModel的点击处理中回调
+
+    @Override
+    protected void convert(NormalRecyclerviewLayoutBinding dataBinding, BeanViewModel vm, int position, int viewType) {
+        dataBinding.setVm(vm);
+        vm.setItemOnClickListener(listener);
+    }
+
+### 添加侧滑删除和拖拽功能
+
+ 要使用侧滑或拖拽功能的adapter需要继承BaseBindingDraggableAdapter
+
+```java
+   public class DraggableAdapter extends BaseBindingDraggableAdapter<ViewDataBinding, BeanViewModel>
+```
 
 ```java
          ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter));
@@ -150,14 +160,6 @@ public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding,
             }
         });
 ```
+ 其余用法与BaseBindingRecyclerViewAdapter
 
- 一般的如点击事件直接在viewModel中处理就好，如果在页面中需要回调（比如页面跳转，因为ViewModel中不好持有Context）,可以创建一个接口，
- 然后在adapter中传递给ViewModel，然后在ViewModel的点击处理中回调
-
-    @Override
-    protected void convert(NormalRecyclerviewLayoutBinding dataBinding, BeanViewModel vm, int position, int viewType) {
-        dataBinding.setVm(vm);
-        vm.setItemOnClickListener(listener);
-    }
-
- 其他还有些方法就不一一列出来了。
+### 其他还有些方法就不一一列出来了。

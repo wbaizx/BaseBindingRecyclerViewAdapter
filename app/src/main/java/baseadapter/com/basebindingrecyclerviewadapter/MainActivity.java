@@ -42,24 +42,35 @@ public class MainActivity extends AppCompatActivity {
 //        activityMainBinding.recycler2.setAdapter(adapter2);
 
 
-        activityMainBinding.recycler3.setVisibility(View.VISIBLE);
-        activityMainBinding.recycler3.setLayoutManager(new LinearLayoutManager(this));
-        activityMainBinding.recycler3.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        final MoreAdapter adapter3 = new MoreAdapter();
-        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
-        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
-        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
-        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
-        addTestData(adapter3.getList());
-        activityMainBinding.recycler3.setAdapter(adapter3);
+//        activityMainBinding.recycler3.setVisibility(View.VISIBLE);
+//        activityMainBinding.recycler3.setLayoutManager(new LinearLayoutManager(this));
+//        activityMainBinding.recycler3.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        final MoreAdapter adapter3 = new MoreAdapter();
+//        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
+//        adapter3.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
+//        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
+//        adapter3.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler3, false));
+//        addTestData(adapter3.getList());
+//        activityMainBinding.recycler3.setAdapter(adapter3);
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter3));
-        itemTouchHelper.attachToRecyclerView(activityMainBinding.recycler3);
+        activityMainBinding.recycler4.setVisibility(View.VISIBLE);
+        activityMainBinding.recycler4.setLayoutManager(new LinearLayoutManager(this));
+        activityMainBinding.recycler4.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        final DraggableAdapter adapter4 = new DraggableAdapter();
+        adapter4.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler4, false));
+        adapter4.addHeaderView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler4, false));
+        adapter4.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler4, false));
+        adapter4.addFooterView(LayoutInflater.from(this).inflate(R.layout.head, activityMainBinding.recycler4, false));
+        addTestData(adapter4.getList());
+        activityMainBinding.recycler4.setAdapter(adapter4);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback(adapter4));
+        itemTouchHelper.attachToRecyclerView(activityMainBinding.recycler4);
         //开启拖拽
-        adapter3.setDragEnabled(true);
+        adapter4.setDragEnabled(true);
         //开启侧滑
-        adapter3.setSwipeEnabled(true);
-        adapter3.setOnItemDragListener(new OnItemDragListener() {
+        adapter4.setSwipeEnabled(true);
+        adapter4.setOnItemDragListener(new OnItemDragListener() {
             @Override
             public void onItemDragStart(int listPosition) {
                 Log.e("efafewa", "onItemDragStart" + "--" + listPosition);
@@ -75,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("efafewa", "onItemDragEnd" + "--" + listPosition);
             }
         });
-        adapter3.setOnItemSwipeListener(new OnItemSwipeListener() {
+        adapter4.setOnItemSwipeListener(new OnItemSwipeListener() {
             @Override
             public void onItemSwipeStart(int listPosition) {
                 Log.e("gwefwae", "onItemSwipeStart" + "--" + listPosition);
@@ -86,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("gwefwae", "onItemSwipeing" + "--" + listPosition);
 //                adapter3.getList().remove(listPosition);
                 //侧滑后如果没有删除选中项需要恢复item状态
-                adapter3.recoverItem(viewHolder, listPosition);
+                adapter4.recoverItem(viewHolder, listPosition);
             }
         });
     }

@@ -6,12 +6,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import baseadapter.com.library.BaseBindingRecyclerViewAdapter;
+import baseadapter.com.library.BaseBindingDraggableAdapter;
 
 public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
-    private BaseBindingRecyclerViewAdapter adapter;
+    private BaseBindingDraggableAdapter adapter;
 
-    public ItemTouchHelperCallback(BaseBindingRecyclerViewAdapter adapter) {
+    public ItemTouchHelperCallback(BaseBindingDraggableAdapter adapter) {
         this.adapter = adapter;
     }
 
@@ -110,7 +110,7 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
     /**
      * 检查adapter中位置是否属于列表数据
      */
-    private <T> boolean isListItem(int position) {
+    private boolean isListItem(int position) {
         return (!adapter.isHeader(position)) && (!adapter.isFooter(position));
     }
 }
