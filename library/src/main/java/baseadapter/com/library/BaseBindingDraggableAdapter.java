@@ -1,5 +1,6 @@
 package baseadapter.com.library;
 
+import android.databinding.ObservableArrayList;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 
@@ -25,6 +26,19 @@ public abstract class BaseBindingDraggableAdapter<DB extends ViewDataBinding, T>
      * 侧滑开关
      */
     private boolean isSwipeEnabled = false;
+
+    /**
+     * 复写构造以便子类能够复写调用
+     */
+    public BaseBindingDraggableAdapter() {
+    }
+
+    /**
+     * 复写构造以便子类能够复写调用
+     */
+    public BaseBindingDraggableAdapter(ObservableArrayList<T> list) {
+        super(list);
+    }
 
     /**
      * 设置自动刷新监听器状态，主要针对拖拽item刷新问题
