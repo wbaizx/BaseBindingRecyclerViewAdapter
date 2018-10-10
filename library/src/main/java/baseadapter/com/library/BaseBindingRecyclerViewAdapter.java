@@ -199,7 +199,7 @@ public abstract class BaseBindingRecyclerViewAdapter<DB extends ViewDataBinding,
      * 添加头部
      */
     public void addHeaderView(View view) {
-        headerlist.add(new ViewInfo(view, ViewInfo.getVIEWTYPE()));
+        headerlist.add(new ViewInfo(view, ViewTypeManage.getViewType()));
         notifyDataSetChanged();
     }
 
@@ -227,7 +227,7 @@ public abstract class BaseBindingRecyclerViewAdapter<DB extends ViewDataBinding,
      * 添加尾部
      */
     public void addFooterView(View view) {
-        footerlist.add(new ViewInfo(view, ViewInfo.getVIEWTYPE()));
+        footerlist.add(new ViewInfo(view, ViewTypeManage.getViewType()));
         notifyDataSetChanged();
     }
 
