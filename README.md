@@ -14,7 +14,7 @@
             }
         }
 
-        implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.4'
+        implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.5'
 ```
 ## 普通使用方法
 
