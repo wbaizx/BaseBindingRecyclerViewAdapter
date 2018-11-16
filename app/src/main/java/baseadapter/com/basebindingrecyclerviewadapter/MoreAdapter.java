@@ -3,6 +3,7 @@ package baseadapter.com.basebindingrecyclerviewadapter;
 import android.databinding.ViewDataBinding;
 
 import baseadapter.com.library.BaseBindingRecyclerViewAdapter;
+import baseadapter.com.library.BaseBindingViewHolder;
 
 public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding, BeanViewModel> {
     @Override
@@ -24,7 +25,7 @@ public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding,
     }
 
     @Override
-    protected void convert(ViewDataBinding dataBinding, BeanViewModel vm, int position, int viewType) {
-        dataBinding.setVariable(BR.vm, vm);
+    protected void convert(BaseBindingViewHolder<ViewDataBinding> holder, BeanViewModel vm, int listPosition) {
+        holder.getDataBinding().setVariable(BR.vm, vm);
     }
 }

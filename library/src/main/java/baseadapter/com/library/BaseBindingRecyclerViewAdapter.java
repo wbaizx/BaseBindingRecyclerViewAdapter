@@ -112,7 +112,7 @@ public abstract class BaseBindingRecyclerViewAdapter<DB extends ViewDataBinding,
             //adapter处理
             int listPosition = position - getHeadersCount();
             T vm = list.get(listPosition);
-            convert(holder.getDataBinding(), vm, listPosition, holder.getItemViewType());
+            convert(holder, vm, listPosition);
             holder.getDataBinding().executePendingBindings();
         }
     }
@@ -179,7 +179,7 @@ public abstract class BaseBindingRecyclerViewAdapter<DB extends ViewDataBinding,
     /**
      * 绑定
      */
-    protected abstract void convert(DB dataBinding, T vm, int listPosition, int viewType);
+    protected abstract void convert(BaseBindingViewHolder<DB> holder, T vm, int listPosition);
 
     /**
      * 根据位置判断是否是头部

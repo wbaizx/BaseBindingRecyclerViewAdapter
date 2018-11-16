@@ -3,6 +3,7 @@ package baseadapter.com.basebindingrecyclerviewadapter;
 import android.databinding.ViewDataBinding;
 
 import baseadapter.com.library.BaseBindingDraggableAdapter;
+import baseadapter.com.library.BaseBindingViewHolder;
 
 public class DraggableAdapter extends BaseBindingDraggableAdapter<ViewDataBinding, BeanViewModel> {
     @Override
@@ -24,7 +25,7 @@ public class DraggableAdapter extends BaseBindingDraggableAdapter<ViewDataBindin
     }
 
     @Override
-    protected void convert(ViewDataBinding dataBinding, BeanViewModel vm, int position, int viewType) {
-        dataBinding.setVariable(BR.vm, vm);
+    protected void convert(BaseBindingViewHolder<ViewDataBinding> holder, BeanViewModel vm, int listPosition) {
+        holder.getDataBinding().setVariable(BR.vm, vm);
     }
 }

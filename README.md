@@ -14,7 +14,7 @@
             }
         }
 
-        implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.0.5'
+        implementation 'com.github.wbaizx:BaseBindingRecyclerViewAdapter:1.1.0'
 ```
 ## 普通使用方法
 
@@ -34,13 +34,19 @@ public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecycler
     }
 
     @Override
-    protected void convert(NormalRecyclerviewLayoutBinding dataBinding, BeanViewModel vm, int position, int viewType) {
-        dataBinding.setVm(vm);
+    protected void convert(BaseBindingViewHolder<NormalRecyclerviewLayoutBinding> holder, BeanViewModel vm, int listPosition) {
+        holder.getDataBinding().setVm(vm);
     }
 }
 
 ```
- 第一个泛型是你列表xml布局对应生成的Binding，第二个泛型是列表数据的ViewModel。在convert中绑定对应viewModel即可。
+ 第一个泛型是你列表xml布局对应生成的Binding，第二个泛型是列表数据的ViewModel。
+
+ convert中第一个参数holder可以获取到对应binding,viewType,根view等。
+ 第二个参数是对应的viewModel。
+ 第三个参数是数据在list中的位置（不包括头尾部）。
+
+ 在convert中绑定对应viewModel即可。
 
  然后使用它
 ```java
@@ -84,8 +90,8 @@ public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding,
     }
 
     @Override
-    protected void convert(ViewDataBinding dataBinding, BeanViewModel vm, int position, int viewType) {
-        dataBinding.setVariable(BR.vm, vm);
+    protected void convert(BaseBindingViewHolder<ViewDataBinding> holder, BeanViewModel vm, int listPosition) {
+        holder.getDataBinding().setVariable(BR.vm, vm);
     }
 }
 
@@ -115,11 +121,19 @@ public class MoreAdapter extends BaseBindingRecyclerViewAdapter<ViewDataBinding,
 ### 点击事件
 
  一般的如点击事件直接在viewModel中处理就好，如果在页面中需要回调（比如页面跳转，因为ViewModel中不好持有Context）,可以创建一个接口，
- 然后在adapter中传递给ViewModel，然后在ViewModel的点击处理中回调
+ 然后在adapter中通过根布局设置点击事件回调，或者传递给ViewModel，然后在ViewModel的点击处理中回调
 ```java
     @Override
-    protected void convert(NormalRecyclerviewLayoutBinding dataBinding, BeanViewModel vm, int position, int viewType) {
-        dataBinding.setVm(vm);
+    protected void convert(BaseBindingViewHolder<NormalRecyclerviewLayoutBinding> holder, BeanViewModel vm, final int listPosition) {
+        holder.getDataBinding().setVm(vm);
+        //直接给根布局设置点击事件
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(listPosition);
+            }
+        });
+        //或者把监听器传到viewModel中回调
         vm.setItemOnClickListener(listener);
     }
 ```

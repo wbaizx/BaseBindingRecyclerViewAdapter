@@ -2,6 +2,7 @@ package baseadapter.com.basebindingrecyclerviewadapter;
 
 import baseadapter.com.basebindingrecyclerviewadapter.databinding.NormalRecyclerviewLayoutBinding;
 import baseadapter.com.library.BaseBindingRecyclerViewAdapter;
+import baseadapter.com.library.BaseBindingViewHolder;
 
 public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecyclerviewLayoutBinding, BeanViewModel> {
 
@@ -16,7 +17,7 @@ public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecycler
     }
 
     @Override
-    protected void convert(NormalRecyclerviewLayoutBinding dataBinding, BeanViewModel vm, int position, int viewType) {
-        dataBinding.setVm(vm);
+    protected void convert(BaseBindingViewHolder<NormalRecyclerviewLayoutBinding> holder, BeanViewModel vm, int listPosition) {
+        holder.getDataBinding().setVm(vm);
     }
 }
