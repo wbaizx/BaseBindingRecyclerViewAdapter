@@ -4,7 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 /**
- * RecyclerView 中的 ViewModel 最好使用原装模式，否则在模型中数据字段改变无法实时刷新
+ * RecyclerView 中的 ViewModel 最好使用原装模式
  */
 public class BeanViewModel extends BaseObservable {
     private String name;

@@ -65,7 +65,14 @@ public class NormalAdapter extends BaseBindingRecyclerViewAdapter<NormalRecycler
         adapter.getList()
 
  获取到ObservableArrayList类型的list（如果使用带参数的构造创建的则是同一个list），然后直接操作list就可以，UI会自动更新。
- 但需要注意列表数据的viewModel模型不要使用LiveData，不然item项的内容改变不能实时更新UI。
+ 但需要注意列表数据的viewModel模型最好不要使用LiveData，因为liveData模式的viewModel初始化不太方便，所以使用原生方式就行。
+ ```java
+ extends BaseObservable
+
+ @Bindable
+
+ notifyPropertyChanged(BR.name);
+ ```
 
 ## 多布局使用方法
 
